@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -std=c99 -Wall -Wextra -D_XOPEN_SOURCE -DDEBUG -g ${OPTIMIZE}
-INCS = -Ivm -Ivendor/gc/include -Ivendor/pcre -Ivendor
-LIBS = ${GC} ${PCRE}
+INCS = -Ivm -Ivendor/pcre -Ivendor
+LIBS = ${PCRE}
 GC = vendor/gc/.libs/libgc.a
 PCRE = vendor/pcre/.libs/libpcre.a
 LEG = vendor/peg/leg
@@ -34,7 +34,7 @@ all: tinyrb
 
 tinyrb: ${LIBS} ${OBJ}
 	@echo " link tinyrb"
-	@${CC} ${CFLAGS} ${OBJ_POTION} ${OBJ} ${LIBS} ${PKG_LIBS} -o tinyrb
+	@${CC} ${CFLAGS} ${OBJ_POTION} ${OBJ} ${LIBS} -lgc ${PKG_LIBS} -o tinyrb
 
 vm/grammar.c: ${LEG} vm/grammar.leg
 	@echo "  leg vm/grammar.leg"
